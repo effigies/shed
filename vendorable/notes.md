@@ -31,3 +31,27 @@ __main__ = _vendorable.main_module
 # Create hooks for installation backends
 _vendorable.install_hooks(__package__, "vendorable_module.py")
 ```
+
+## Build-time configuration
+
+`pyproject.toml`
+
+```toml
+[build-system]
+requires = [..., "pkg"]
+build-backend = ...
+
+[tool.pkg.vendor]
+install-as = "downstream._pkg"
+```
+
+So vendoring `vendorable` itself at build-time would look like:
+
+```toml
+[build-system]
+requires = [..., "vendorable"]
+build-backend = ...
+
+[tool.vendorable.vendor]
+install-as = "pkg._vendorable"
+```
